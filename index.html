@@ -12,7 +12,7 @@
     <div class="sidebar-top">
       <button class="hamburger" aria-label="Menu">&#9776;</button>
       <div class="profile-icon">
-        <img src="assets/profile_pic.png" alt="Profile" />
+        <img src="assets/profile_pic.jpg" alt="Profile" />
       </div>
     </div>
     <nav class="sidebar-nav">
@@ -22,7 +22,7 @@
       </button>
       <button class="nav-btn" data-section="discover">
         <span class="nav-icon">&#128269;</span>
-        <span>Discover</span>
+        <span>Discovery</span>
       </button>
       <button class="nav-btn" data-section="messenger">
         <span class="nav-icon">&#128172;</span>
@@ -31,16 +31,17 @@
     </nav>
   </aside>
   <main>
-    <header class="main-header">
-      <div>
-        <h2>Home Page</h2>
-      </div>
-      <div class="main-header-icons">
-        <span class="icon">&#128276;</span>
-        <span class="icon">&#9881;</span>
-      </div>
-    </header>
+    <!-- HOME SECTION -->
     <section id="home" class="main-section active">
+      <header class="main-header">
+        <div>
+          <h2>Home Page</h2>
+        </div>
+        <div class="main-header-icons">
+          <span class="icon">&#128276;</span>
+          <span class="icon">&#9881;</span>
+        </div>
+      </header>
       <div class="content-wrapper">
         <div class="section-title-row">
           <h3>Current Matches</h3>
@@ -60,15 +61,41 @@
       </div>
     </section>
 
+    <!-- DISCOVER SECTION -->
     <section id="discover" class="main-section">
+      <header class="main-header">
+        <div class="header-with-back">
+          <button class="back-btn" data-section="home">&#8592;</button>
+          <h2>Discover Matches</h2>
+        </div>
+        <div class="main-header-icons">
+          <span class="icon">&#8942;</span>
+        </div>
+      </header>
       <div class="content-wrapper">
-        <h2>Discover</h2>
-        <p>Page under construction.</p>
+        <div class="filter-tabs">
+          <button class="filter-btn" data-filter="accepted">Accepted</button>
+          <button class="filter-btn active" data-filter="potential">Potential</button>
+          <button class="filter-btn" data-filter="rejected">Rejected</button>
+        </div>
+        <div class="discover-grid" id="discover-container">
+          <!-- Dynamically populated by JavaScript -->
+        </div>
       </div>
     </section>
+
+    <!-- MESSENGER SECTION -->
     <section id="messenger" class="main-section">
+      <header class="main-header">
+        <div>
+          <h2>Messenger</h2>
+        </div>
+        <div class="main-header-icons">
+          <span class="icon">&#128276;</span>
+          <span class="icon">&#9881;</span>
+        </div>
+      </header>
       <div class="content-wrapper">
-        <h2>Messenger</h2>
         <p>Page under construction.</p>
       </div>
     </section>
