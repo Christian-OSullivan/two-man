@@ -1,21 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Navigation history
   let navigationHistory = ['home'];
 
-  // Sidebar Toggle (dropdown only)
   const hamburgerBtn = document.getElementById('hamburger-btn');
   const sidebarNavDropdown = document.getElementById('sidebar-nav');
   
   hamburgerBtn.addEventListener('click', () => {
-    sidebarNavDropdown.classList.toggle('expanded');
+    const isExpanded = sidebarNavDropdown.classList.toggle('expanded');
+    hamburgerBtn.setAttribute('aria-expanded', isExpanded);
   });
 
-  // Navigation
   const navButtons = document.querySelectorAll('.nav-btn');
   const sections = document.querySelectorAll('.main-section');
   
   function switchSection(targetSection, addToHistory = true) {
-    // Add to history
     if (addToHistory && navigationHistory[navigationHistory.length - 1] !== targetSection) {
       navigationHistory.push(targetSection);
     }
@@ -24,12 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(s => {
       s.classList.toggle('active', s.id === targetSection);
     });
+    
     const matchingNavBtn = document.querySelector(`.nav-btn[data-section="${targetSection}"]`);
     if (matchingNavBtn) {
       matchingNavBtn.classList.add('active');
     }
-    // Close dropdown after selection
+    
     sidebarNavDropdown.classList.remove('expanded');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
   }
   
   navButtons.forEach(btn => {
@@ -39,12 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Smart back buttons
   const smartBackButtons = document.querySelectorAll('.smart-back');
   smartBackButtons.forEach(btn => {
     btn.addEventListener('click', () => {
       if (navigationHistory.length > 1) {
-        navigationHistory.pop(); // Remove current page
+        navigationHistory.pop();
         const previousPage = navigationHistory[navigationHistory.length - 1];
         switchSection(previousPage, false);
       } else {
@@ -53,8 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Clickable icons in headers
-  const clickableIcons = document.querySelectorAll('.icon.clickable');
+  const clickableIcons = document.querySelectorAll('.icon-btn.clickable');
   clickableIcons.forEach(icon => {
     icon.addEventListener('click', () => {
       const target = icon.getAttribute('data-section');
@@ -64,79 +61,127 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Dynamic Matches Data (Home Page)
   const matchesData = [
-    { name: 'Name1 Surname1', image: 'assets/profile_pic.png' },
-    { name: 'Name2 Surname2', image: 'assets/profile_pic.png' },
-    { name: 'Name3 Surname3', image: 'assets/profile_pic.png' },
-    { name: 'Name4 Surname4', image: 'assets/profile_pic.png' },
-    { name: 'Name5 Surname5', image: 'assets/profile_pic.png' },
-    { name: 'Name6 Surname6', image: 'assets/profile_pic.png' }
+    { name: 'Sarah Johnson', image: 'assets/profile_pic.png' },
+    { name: 'Michael Chen', image: 'assets/profile_pic.png' },
+    { name: 'Emma O\'Connor', image: 'assets/profile_pic.png' },
+    { name: 'David Murphy', image: 'assets/profile_pic.png' },
+    { name: 'Lisa Walsh', image: 'assets/profile_pic.png' },
+    { name: 'James Ryan', image: 'assets/profile_pic.png' }
   ];
 
   const matchesContainer = document.getElementById('matches-container');
-  matchesData.forEach(match => {
+  matchesData.forEach((match, index) => {
     const profileDiv = document.createElement('div');
     profileDiv.className = 'profile';
+    profileDiv.setAttribute('tabindex', '0');
+    profileDiv.setAttribute('role', 'button');
+    profileDiv.setAttribute('aria-label', `View profile of ${match.name}`);
     profileDiv.innerHTML = `
-      <img src="${match.image}" alt="${match.name}">
+      <img src="${match.image}" alt="${match.name}'s profile picture">
       <div>${match.name}</div>
     `;
+    profileDiv.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        profileDiv.click();
+      }
+    });
     matchesContainer.appendChild(profileDiv);
   });
 
-  // Dynamic News Data (Home Page)
   const newsData = [
-    { title: 'Housing Fair', description: 'Join us next week for DCU Housing Fair' },
-    { title: 'New Features', description: 'Check out our latest app updates' },
-    { title: 'Success Stories', description: 'Read about successful roommate matches' }
+    { title: 'Housing Fair', description: 'Join us next week for DCU Housing Fair on December 5th' },
+    { title: 'New Features', description: 'Video chat now available for verified matches' },
+    { title: 'Success Stories', description: '500+ successful roommate matches this semester!' }
   ];
 
   const newsContainer = document.getElementById('news-container');
   newsData.forEach(news => {
     const newsCard = document.createElement('div');
     newsCard.className = 'news-card';
+    newsCard.setAttribute('tabindex', '0');
+    newsCard.setAttribute('role', 'article');
     newsCard.innerHTML = `
       <h4>${news.title}</h4>
       <p>${news.description}</p>
     `;
+    newsCard.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        newsCard.click();
+      }
+    });
     newsContainer.appendChild(newsCard);
   });
 
-  // Discover Page - Filter Tabs
+  const notificationsData = [
+    { icon: '💬', title: 'New Message', text: 'Sarah Johnson sent you a message', time: '2 min ago', unread: true },
+    { icon: '✓', title: 'Match Accepted', text: 'Michael Chen accepted your match request', time: '1 hour ago', unread: true },
+    { icon: '👤', title: 'Profile View', text: 'Emma O\'Connor viewed your profile', time: '3 hours ago', unread: false },
+    { icon: '⭐', title: 'New Match', text: 'You have 3 new potential matches', time: '5 hours ago', unread: false },
+    { icon: '📅', title: 'Event Reminder', text: 'Housing Fair starts tomorrow at 2pm', time: '1 day ago', unread: false }
+  ];
+
+  const notificationsList = document.getElementById('notifications-list');
+  notificationsData.forEach(notification => {
+    const notifItem = document.createElement('div');
+    notifItem.className = `notification-item ${notification.unread ? 'unread' : ''}`;
+    notifItem.setAttribute('tabindex', '0');
+    notifItem.setAttribute('role', 'button');
+    notifItem.innerHTML = `
+      <div class="notification-icon">${notification.icon}</div>
+      <div class="notification-content">
+        <strong>${notification.title}</strong>
+        <p>${notification.text}</p>
+      </div>
+      <div class="notification-time">${notification.time}</div>
+    `;
+    notifItem.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        notifItem.classList.remove('unread');
+      }
+    });
+    notifItem.addEventListener('click', () => {
+      notifItem.classList.remove('unread');
+    });
+    notificationsList.appendChild(notifItem);
+  });
+
   const filterButtons = document.querySelectorAll('.filter-btn');
   filterButtons.forEach(btn => {
     btn.addEventListener('click', () => {
-      filterButtons.forEach(b => b.classList.remove('active'));
+      filterButtons.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
       btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
       const filter = btn.getAttribute('data-filter');
       loadDiscoverProfiles(filter);
     });
   });
 
-  // Discover Page - Dynamic Profiles
   const discoverData = {
     accepted: [
-      { name: 'fullName1', status: 'Updated today', image: 'assets/profile_pic.png' },
-      { name: 'fullName2', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
-      { name: 'fullName3', status: 'Updated today', image: 'assets/profile_pic.png' },
-      { name: 'fullName4', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' }
+      { name: 'Sarah Johnson', status: 'Updated today', image: 'assets/profile_pic.png' },
+      { name: 'Michael Chen', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
+      { name: 'Emma O\'Connor', status: 'Updated today', image: 'assets/profile_pic.png' },
+      { name: 'David Murphy', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' }
     ],
     potential: [
-      { name: 'fullName1', status: 'Updated today', image: 'assets/profile_pic.png' },
-      { name: 'fullName2', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
-      { name: 'fullName3', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' },
-      { name: 'fullName4', status: 'Updated today', image: 'assets/profile_pic.png' },
-      { name: 'fullName5', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
-      { name: 'fullName6', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' },
-      { name: 'fullName7', status: 'Updated today', image: 'assets/profile_pic.png' },
-      { name: 'fullName8', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
-      { name: 'fullName9', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' },
-      { name: 'fullName10', status: 'Updated today', image: 'assets/profile_pic.png' }
+      { name: 'Lisa Walsh', status: 'Updated today', image: 'assets/profile_pic.png' },
+      { name: 'James Ryan', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
+      { name: 'Sophie Brown', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' },
+      { name: 'Tom Wilson', status: 'Updated today', image: 'assets/profile_pic.png' },
+      { name: 'Amy Taylor', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
+      { name: 'Chris Martin', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' },
+      { name: 'Rachel Green', status: 'Updated today', image: 'assets/profile_pic.png' },
+      { name: 'Ben Collins', status: 'Updated yesterday', image: 'assets/profile_pic.png' },
+      { name: 'Kate Morgan', status: 'Updated 2 days ago', image: 'assets/profile_pic.png' },
+      { name: 'Alex Turner', status: 'Updated today', image: 'assets/profile_pic.png' }
     ],
     rejected: [
-      { name: 'fullName1', status: 'Updated 3 days ago', image: 'assets/profile_pic.png' },
-      { name: 'fullName2', status: 'Updated 5 days ago', image: 'assets/profile_pic.png' }
+      { name: 'Mark Davis', status: 'Updated 3 days ago', image: 'assets/profile_pic.png' },
+      { name: 'Laura Smith', status: 'Updated 5 days ago', image: 'assets/profile_pic.png' }
     ]
   };
 
@@ -148,44 +193,66 @@ document.addEventListener('DOMContentLoaded', () => {
     profiles.forEach(profile => {
       const profileDiv = document.createElement('div');
       profileDiv.className = 'discover-profile';
+      profileDiv.setAttribute('tabindex', '0');
+      profileDiv.setAttribute('role', 'button');
+      profileDiv.setAttribute('aria-label', `View profile of ${profile.name}, ${profile.status}`);
       profileDiv.innerHTML = `
-        <img src="${profile.image}" alt="${profile.name}">
+        <img src="${profile.image}" alt="${profile.name}'s profile picture">
         <div class="name">${profile.name}</div>
         <div class="status">${profile.status}</div>
       `;
+      profileDiv.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          profileDiv.click();
+        }
+      });
       container.appendChild(profileDiv);
     });
   }
 
-  // Load initial discover profiles (Potential)
   loadDiscoverProfiles('potential');
 
-  // Messenger Page - Conversations and Chat Management
   const conversationsData = [
-    { id: 1, name: 'fullName1', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
-    { id: 2, name: 'fullName 2', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
-    { id: 3, name: 'fullName 3', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
-    { id: 4, name: 'fullName 4', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
-    { id: 5, name: 'fullName 5', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
-    { id: 6, name: 'fullName6', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
-    { id: 7, name: 'fullName 7', preview: 'Supporting...', time: '10 min', image: 'assets/profile_pic.png', messages: [] },
+    { id: 1, name: 'Sarah Johnson', preview: 'Sounds great! See you then', time: '2 min', image: 'assets/profile_pic.png', messages: [
+      { type: 'text', sender: 'received', text: 'Hey! Are you still looking for a roommate?' },
+      { type: 'text', sender: 'sent', text: 'Yes! I am. Are you interested?' },
+      { type: 'text', sender: 'received', text: 'Definitely! Want to meet up this week?' },
+      { type: 'text', sender: 'sent', text: 'Sounds great! How about Thursday at 3pm?' },
+      { type: 'text', sender: 'received', text: 'Sounds great! See you then' }
+    ]},
+    { id: 2, name: 'Michael Chen', preview: 'Thanks for the info!', time: '15 min', image: 'assets/profile_pic.png', messages: [
+      { type: 'text', sender: 'received', text: 'Hi! What\'s your budget range?' },
+      { type: 'text', sender: 'sent', text: 'Around €500-600 per month' },
+      { type: 'text', sender: 'received', text: 'Perfect, that works for me too!' },
+      { type: 'text', sender: 'sent', text: 'Great! I found a few places we could check out' },
+      { type: 'text', sender: 'received', text: 'Thanks for the info!' }
+    ]},
+    { id: 3, name: 'Emma O\'Connor', preview: 'I prefer quiet environment', time: '1 hour', image: 'assets/profile_pic.png', messages: [
+      { type: 'text', sender: 'received', text: 'Do you have any preferences for living?' },
+      { type: 'text', sender: 'sent', text: 'I prefer a quiet place and I\'m pretty clean' },
+      { type: 'text', sender: 'received', text: 'I prefer quiet environment' }
+    ]},
+    { id: 4, name: 'David Murphy', preview: 'Let me check my schedule', time: '2 hours', image: 'assets/profile_pic.png', messages: [] },
+    { id: 5, name: 'Lisa Walsh', preview: 'That works for me!', time: '3 hours', image: 'assets/profile_pic.png', messages: [] },
+    { id: 6, name: 'James Ryan', preview: 'Sounds good', time: '5 hours', image: 'assets/profile_pic.png', messages: [] },
+    { id: 7, name: 'Sophie Brown', preview: 'I\'ll get back to you', time: '1 day', image: 'assets/profile_pic.png', messages: [] },
     { 
       id: 8, 
-      name: 'fullName8', 
+      name: 'Tom Wilson', 
       preview: "Thanks! I'll send mine soon as well", 
-      time: '10 min', 
+      time: '2 days', 
       image: 'assets/profile_pic.png',
       messages: [
         {
           type: 'link-card',
           sender: 'sent',
-          title: 'fullName - LinkedIn Profile',
-          url: 'www.linkedin.com/fullname'
+          title: 'Tom Wilson - LinkedIn Profile',
+          url: 'www.linkedin.com/in/tomwilson'
         },
         {
           type: 'text',
           sender: 'sent',
-          text: 'Here is my LinkedIn if you want to connect !'
+          text: 'Here is my LinkedIn if you want to connect!'
         },
         {
           type: 'text',
@@ -196,23 +263,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   ];
 
-  let currentConversationId = 8;
+  let currentConversationId = 1;
 
   const conversationsList = document.getElementById('conversations-list');
   const chatMessages = document.getElementById('chat-messages');
   const chatRecipientName = document.getElementById('chat-recipient-name');
   const messageInput = document.getElementById('message-input');
-  const sendBtn = document.getElementById('send-btn');
+  const chatForm = document.getElementById('chat-form');
 
-  // Render conversations list
   function renderConversations() {
     conversationsList.innerHTML = '';
     conversationsData.forEach(conv => {
       const convItem = document.createElement('div');
       convItem.className = `conversation-item ${conv.id === currentConversationId ? 'active' : ''}`;
+      convItem.setAttribute('tabindex', '0');
+      convItem.setAttribute('role', 'listitem');
       convItem.dataset.convId = conv.id;
       convItem.innerHTML = `
-        <img src="${conv.image}" alt="${conv.name}">
+        <img src="${conv.image}" alt="${conv.name}'s profile picture">
         <div class="conversation-info">
           <div class="conversation-name">${conv.name}</div>
           <div class="conversation-preview">${conv.preview}</div>
@@ -224,23 +292,35 @@ document.addEventListener('DOMContentLoaded', () => {
         loadChat(conv);
         renderConversations();
       });
+      convItem.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          convItem.click();
+        }
+      });
       conversationsList.appendChild(convItem);
     });
   }
 
-  // Load and display chat messages
   function loadChat(conversation) {
     chatRecipientName.textContent = conversation.name;
     chatMessages.innerHTML = '';
     
-    conversation.messages.forEach(msg => {
-      appendMessage(msg);
-    });
+    if (conversation.messages.length === 0) {
+      const emptyState = document.createElement('div');
+      emptyState.style.textAlign = 'center';
+      emptyState.style.color = 'var(--color-text-secondary)';
+      emptyState.style.padding = '2rem';
+      emptyState.textContent = 'No messages yet. Start the conversation!';
+      chatMessages.appendChild(emptyState);
+    } else {
+      conversation.messages.forEach(msg => {
+        appendMessage(msg);
+      });
+    }
     
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  // Append message to chat
   function appendMessage(msg) {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${msg.sender}`;
@@ -248,15 +328,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (msg.type === 'link-card') {
       messageDiv.innerHTML = `
         <div class="message-content">
-          <div class="message-link-card">
-            <div class="link-preview">🌐</div>
+          <div class="message-link-card" tabindex="0" role="link">
+            <div class="link-preview" aria-hidden="true">🌐</div>
             <div class="link-title">${msg.title}</div>
             <div class="link-url">${msg.url}</div>
           </div>
         </div>
       `;
     } else {
-      const avatarHTML = msg.sender === 'received' ? '<div class="message-avatar">👤</div>' : '';
+      const avatarHTML = msg.sender === 'received' ? '<div class="message-avatar" aria-hidden="true">👤</div>' : '';
       messageDiv.innerHTML = `
         ${avatarHTML}
         <div class="message-content">
@@ -268,10 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
     chatMessages.appendChild(messageDiv);
   }
 
-  // Send Message Functionality
   function sendMessage() {
     const text = messageInput.value.trim();
-    if (text && currentConversationId) {
+    if (!text) {
+      messageInput.focus();
+      return;
+    }
+    
+    if (currentConversationId) {
       const newMessage = {
         type: 'text',
         sender: 'sent',
@@ -290,14 +374,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  sendBtn.addEventListener('click', sendMessage);
-  messageInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-      sendMessage();
-    }
+  chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    sendMessage();
   });
 
-  // Initial render
   renderConversations();
   const initialConv = conversationsData.find(c => c.id === currentConversationId);
   if (initialConv) {

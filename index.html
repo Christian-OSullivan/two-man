@@ -1,185 +1,249 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Two-Man Roommate Matchmaking Service - Find your perfect roommate match">
   <title>Two-Man: Roommate Matchmaking</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="container">
-  <aside class="sidebar" id="sidebar">
-    <div class="sidebar-top">
-      <button class="hamburger" id="hamburger-btn" aria-label="Menu">&#9776;</button>
-      <div class="profile-icon">
-        <img src="assets/profile_pic.png" alt="Profile" />
-      </div>
-    </div>
-    
-    <!-- Always visible navigation -->
-    <nav class="sidebar-nav-fixed">
-      <button class="nav-btn" data-section="home">
-        <span class="nav-icon">&#127760;</span>
-        <span>Home</span>
-      </button>
-      <button class="nav-btn" data-section="discover">
-        <span class="nav-icon">&#128269;</span>
-        <span>Discovery</span>
-      </button>
-      <button class="nav-btn" data-section="messenger">
-        <span class="nav-icon">&#128172;</span>
-        <span>Messenger</span>
-      </button>
-    </nav>
-
-    <!-- Dropdown navigation (hidden by default) -->
-    <nav class="sidebar-nav-dropdown" id="sidebar-nav">
-      <div class="nav-divider"></div>
-      <button class="nav-btn" data-section="profile">
-        <span class="nav-icon">&#128100;</span>
-        <span>Profile</span>
-      </button>
-      <button class="nav-btn" data-section="settings">
-        <span class="nav-icon">&#9881;</span>
-        <span>Settings</span>
-      </button>
-      <button class="nav-btn" data-section="notifications">
-        <span class="nav-icon">&#128276;</span>
-        <span>Notifications</span>
-      </button>
-    </nav>
-  </aside>
-  <main>
-    <!-- HOME SECTION -->
-    <section id="home" class="main-section active">
-      <header class="main-header">
-        <div>
-          <h2>Home Page</h2>
-        </div>
-        <div class="main-header-icons">
-          <span class="icon clickable" data-section="notifications" title="Notifications">&#128276;</span>
-          <span class="icon clickable" data-section="settings" title="Settings">&#9881;</span>
-        </div>
-      </header>
-      <div class="content-wrapper">
-        <div class="section-title-row">
-          <h3>Current Matches</h3>
-          <span class="arrow">&#8594;</span>
-        </div>
-        <div class="matches-row" id="matches-container">
-          <!-- Dynamically populated by JavaScript -->
-        </div>
-
-        <div class="section-title-row">
-          <h3>News & Updates</h3>
-          <span class="arrow">&#8594;</span>
-        </div>
-        <div class="news-row" id="news-container">
-          <!-- Dynamically populated by JavaScript -->
+  <div class="container">
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+      <div class="sidebar-top">
+        <button class="hamburger" id="hamburger-btn" aria-label="Toggle menu" aria-expanded="false">
+          <span aria-hidden="true">&#9776;</span>
+        </button>
+        <div class="profile-icon">
+          <img src="assets/profile_pic.png" alt="User profile picture">
         </div>
       </div>
-    </section>
+      
+      <nav class="sidebar-nav-fixed">
+        <button class="nav-btn" data-section="home" aria-label="Go to Home">
+          <span class="nav-icon" aria-hidden="true">&#127760;</span>
+          <span>Home</span>
+        </button>
+        <button class="nav-btn" data-section="discover" aria-label="Go to Discovery">
+          <span class="nav-icon" aria-hidden="true">&#128269;</span>
+          <span>Discovery</span>
+        </button>
+        <button class="nav-btn" data-section="messenger" aria-label="Go to Messenger">
+          <span class="nav-icon" aria-hidden="true">&#128172;</span>
+          <span>Messenger</span>
+        </button>
+      </nav>
 
-    <!-- PROFILE SECTION -->
-    <section id="profile" class="main-section">
-      <header class="main-header">
-        <div class="header-with-back">
-          <button class="back-btn smart-back">&#8592;</button>
-          <h2>My Profile</h2>
-        </div>
-        <div class="main-header-icons">
-          <span class="icon clickable" data-section="settings" title="Settings">&#9881;</span>
-        </div>
-      </header>
-      <div class="content-wrapper">
-        <p>Profile page - Coming soon</p>
-      </div>
-    </section>
+      <nav class="sidebar-nav-dropdown" id="sidebar-nav" aria-label="Additional menu">
+        <div class="nav-divider" role="separator"></div>
+        <button class="nav-btn" data-section="profile" aria-label="Go to Profile">
+          <span class="nav-icon" aria-hidden="true">&#128100;</span>
+          <span>Profile</span>
+        </button>
+        <button class="nav-btn" data-section="settings" aria-label="Go to Settings">
+          <span class="nav-icon" aria-hidden="true">&#9881;</span>
+          <span>Settings</span>
+        </button>
+        <button class="nav-btn" data-section="notifications" aria-label="Go to Notifications">
+          <span class="nav-icon" aria-hidden="true">&#128276;</span>
+          <span>Notifications</span>
+        </button>
+      </nav>
+    </aside>
 
-    <!-- SETTINGS SECTION -->
-    <section id="settings" class="main-section">
-      <header class="main-header">
-        <div class="header-with-back">
-          <button class="back-btn smart-back">&#8592;</button>
-          <h2>Settings</h2>
-        </div>
-      </header>
-      <div class="content-wrapper">
-        <p>Settings page - Coming soon</p>
-      </div>
-    </section>
-
-    <!-- NOTIFICATIONS SECTION -->
-    <section id="notifications" class="main-section">
-      <header class="main-header">
-        <div class="header-with-back">
-          <button class="back-btn smart-back">&#8592;</button>
-          <h2>Notifications</h2>
-        </div>
-      </header>
-      <div class="content-wrapper">
-        <p>Notifications page - Coming soon</p>
-      </div>
-    </section>
-
-    <!-- DISCOVER SECTION -->
-    <section id="discover" class="main-section">
-      <header class="main-header">
-        <div class="header-with-back">
-          <button class="back-btn smart-back">&#8592;</button>
-          <h2>Discover Matches</h2>
-        </div>
-        <div class="main-header-icons">
-          <span class="icon clickable" data-section="settings" title="Settings">&#8942;</span>
-        </div>
-      </header>
-      <div class="content-wrapper">
-        <div class="filter-tabs">
-          <button class="filter-btn" data-filter="accepted">Accepted</button>
-          <button class="filter-btn active" data-filter="potential">Potential</button>
-          <button class="filter-btn" data-filter="rejected">Rejected</button>
-        </div>
-        <div class="discover-grid" id="discover-container">
-          <!-- Dynamically populated by JavaScript -->
-        </div>
-      </div>
-    </section>
-
-    <!-- MESSENGER SECTION -->
-    <section id="messenger" class="main-section messenger-layout">
-      <div class="messenger-sidebar">
-        <div class="messenger-header">
-          <h3>Conversations</h3>
-        </div>
-        <div class="conversations-list" id="conversations-list">
-          <!-- Dynamically populated by JavaScript -->
-        </div>
-      </div>
-      <div class="chat-area">
-        <div class="chat-header">
-          <div class="chat-header-left">
-            <button class="back-btn-chat smart-back">&#8592;</button>
-            <span id="chat-recipient-name">Select a conversation</span>
+    <main role="main">
+      <section id="home" class="main-section active">
+        <header class="main-header">
+          <div>
+            <h1>Home Page</h1>
           </div>
-          <div class="chat-header-icons">
-            <span class="icon clickable" title="Search">&#128269;</span>
-            <span class="icon clickable" data-section="settings" title="Settings">&#8942;</span>
+          <div class="main-header-icons">
+            <button class="icon-btn clickable" data-section="notifications" aria-label="View notifications">
+              <span aria-hidden="true">&#128276;</span>
+            </button>
+            <button class="icon-btn clickable" data-section="settings" aria-label="Go to settings">
+              <span aria-hidden="true">&#9881;</span>
+            </button>
+          </div>
+        </header>
+        <div class="content-wrapper">
+          <div class="section-title-row">
+            <h2>Current Matches</h2>
+            <span class="arrow" aria-hidden="true">&#8594;</span>
+          </div>
+          <div class="matches-row" id="matches-container"></div>
+
+          <div class="section-title-row">
+            <h2>News & Updates</h2>
+            <span class="arrow" aria-hidden="true">&#8594;</span>
+          </div>
+          <div class="news-row" id="news-container"></div>
+        </div>
+      </section>
+
+      <section id="profile" class="main-section">
+        <header class="main-header">
+          <div class="header-with-back">
+            <button class="back-btn smart-back" aria-label="Go back">
+              <span aria-hidden="true">&#8592;</span>
+            </button>
+            <h1>My Profile</h1>
+          </div>
+          <div class="main-header-icons">
+            <button class="icon-btn clickable" data-section="settings" aria-label="Go to settings">
+              <span aria-hidden="true">&#9881;</span>
+            </button>
+          </div>
+        </header>
+        <div class="content-wrapper">
+          <div class="profile-content">
+            <div class="profile-card">
+              <img src="assets/profile_pic.png" alt="Your profile picture" class="profile-large-img">
+              <h2>John Doe</h2>
+              <p class="profile-bio">Computer Science student at DCU. Looking for a clean, quiet roommate who shares similar interests in tech and gaming.</p>
+              <div class="profile-details">
+                <div class="detail-item">
+                  <strong>Age:</strong> 21
+                </div>
+                <div class="detail-item">
+                  <strong>Course:</strong> Computer Science
+                </div>
+                <div class="detail-item">
+                  <strong>Interests:</strong> Gaming, Coding, Music
+                </div>
+                <div class="detail-item">
+                  <strong>Budget:</strong> €400-600/month
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="chat-messages" id="chat-messages">
-          <!-- Dynamically populated by JavaScript -->
+      </section>
+
+      <section id="settings" class="main-section">
+        <header class="main-header">
+          <div class="header-with-back">
+            <button class="back-btn smart-back" aria-label="Go back">
+              <span aria-hidden="true">&#8592;</span>
+            </button>
+            <h1>Settings</h1>
+          </div>
+        </header>
+        <div class="content-wrapper">
+          <div class="settings-content">
+            <div class="settings-section">
+              <h2>Account Settings</h2>
+              <div class="settings-item">
+                <span>Email notifications</span>
+                <button class="toggle-btn active" aria-label="Toggle email notifications">ON</button>
+              </div>
+              <div class="settings-item">
+                <span>Show profile to matches</span>
+                <button class="toggle-btn active" aria-label="Toggle profile visibility">ON</button>
+              </div>
+              <div class="settings-item">
+                <span>Dark mode</span>
+                <button class="toggle-btn" aria-label="Toggle dark mode">OFF</button>
+              </div>
+            </div>
+            <div class="settings-section">
+              <h2>Privacy</h2>
+              <div class="settings-item">
+                <span>Profile visibility</span>
+                <select aria-label="Profile visibility setting">
+                  <option>Everyone</option>
+                  <option>Matches only</option>
+                  <option>Nobody</option>
+                </select>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="chat-input-area">
-          <button class="attachment-btn" aria-label="Attach">&#128206;</button>
-          <button class="emoji-btn" aria-label="Emoji">&#128578;</button>
-          <input type="text" id="message-input" placeholder="Type a message..." />
-          <button class="menu-btn" aria-label="Menu">&#9776;</button>
-          <button class="send-btn" id="send-btn" aria-label="Send">&#10148;</button>
+      </section>
+
+      <section id="notifications" class="main-section">
+        <header class="main-header">
+          <div class="header-with-back">
+            <button class="back-btn smart-back" aria-label="Go back">
+              <span aria-hidden="true">&#8592;</span>
+            </button>
+            <h1>Notifications</h1>
+          </div>
+        </header>
+        <div class="content-wrapper">
+          <div class="notifications-list" id="notifications-list"></div>
         </div>
-      </div>
-    </section>
-  </main>
-</div>
-<script src="scripts.js"></script>
+      </section>
+
+      <section id="discover" class="main-section">
+        <header class="main-header">
+          <div class="header-with-back">
+            <button class="back-btn smart-back" aria-label="Go back">
+              <span aria-hidden="true">&#8592;</span>
+            </button>
+            <h1>Discover Matches</h1>
+          </div>
+          <div class="main-header-icons">
+            <button class="icon-btn clickable" data-section="settings" aria-label="Go to settings">
+              <span aria-hidden="true">&#8942;</span>
+            </button>
+          </div>
+        </header>
+        <div class="content-wrapper">
+          <div class="filter-tabs" role="tablist">
+            <button class="filter-btn" data-filter="accepted" role="tab" aria-selected="false">Accepted</button>
+            <button class="filter-btn active" data-filter="potential" role="tab" aria-selected="true">Potential</button>
+            <button class="filter-btn" data-filter="rejected" role="tab" aria-selected="false">Rejected</button>
+          </div>
+          <div class="discover-grid" id="discover-container" role="region" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="messenger" class="main-section messenger-layout">
+        <div class="messenger-sidebar">
+          <div class="messenger-header">
+            <h2>Conversations</h2>
+          </div>
+          <div class="conversations-list" id="conversations-list" role="list"></div>
+        </div>
+        <div class="chat-area">
+          <div class="chat-header">
+            <div class="chat-header-left">
+              <button class="back-btn-chat smart-back" aria-label="Go back">
+                <span aria-hidden="true">&#8592;</span>
+              </button>
+              <h2 id="chat-recipient-name">Select a conversation</h2>
+            </div>
+            <div class="chat-header-icons">
+              <button class="icon-btn clickable" aria-label="Search messages">
+                <span aria-hidden="true">&#128269;</span>
+              </button>
+              <button class="icon-btn clickable" data-section="settings" aria-label="Go to settings">
+                <span aria-hidden="true">&#8942;</span>
+              </button>
+            </div>
+          </div>
+          <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-atomic="false"></div>
+          <form class="chat-input-area" id="chat-form">
+            <button type="button" class="attachment-btn" aria-label="Attach file">
+              <span aria-hidden="true">&#128206;</span>
+            </button>
+            <button type="button" class="emoji-btn" aria-label="Insert emoji">
+              <span aria-hidden="true">&#128578;</span>
+            </button>
+            <label for="message-input" class="sr-only">Type your message</label>
+            <input type="text" id="message-input" placeholder="Type a message..." aria-label="Message input">
+            <button type="button" class="menu-btn" aria-label="More options">
+              <span aria-hidden="true">&#9776;</span>
+            </button>
+            <button type="submit" class="send-btn" id="send-btn" aria-label="Send message">
+              <span aria-hidden="true">&#10148;</span>
+            </button>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="scripts.js"></script>
 </body>
 </html>
