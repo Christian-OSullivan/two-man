@@ -8,15 +8,17 @@
 </head>
 <body>
 <div class="container">
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-top">
-      <button class="hamburger" aria-label="Menu">&#9776;</button>
+      <button class="hamburger" id="hamburger-btn" aria-label="Menu">&#9776;</button>
       <div class="profile-icon">
-        <img src="assets/profile_pic.jpg" alt="Profile" />
+        <img src="assets/profile_pic.png" alt="Profile" />
       </div>
     </div>
-    <nav class="sidebar-nav">
-      <button class="nav-btn active" data-section="home">
+    
+    <!-- Always visible navigation -->
+    <nav class="sidebar-nav-fixed">
+      <button class="nav-btn" data-section="home">
         <span class="nav-icon">&#127760;</span>
         <span>Home</span>
       </button>
@@ -29,6 +31,23 @@
         <span>Messenger</span>
       </button>
     </nav>
+
+    <!-- Dropdown navigation (hidden by default) -->
+    <nav class="sidebar-nav-dropdown" id="sidebar-nav">
+      <div class="nav-divider"></div>
+      <button class="nav-btn" data-section="profile">
+        <span class="nav-icon">&#128100;</span>
+        <span>Profile</span>
+      </button>
+      <button class="nav-btn" data-section="settings">
+        <span class="nav-icon">&#9881;</span>
+        <span>Settings</span>
+      </button>
+      <button class="nav-btn" data-section="notifications">
+        <span class="nav-icon">&#128276;</span>
+        <span>Notifications</span>
+      </button>
+    </nav>
   </aside>
   <main>
     <!-- HOME SECTION -->
@@ -38,8 +57,8 @@
           <h2>Home Page</h2>
         </div>
         <div class="main-header-icons">
-          <span class="icon">&#128276;</span>
-          <span class="icon">&#9881;</span>
+          <span class="icon clickable" data-section="notifications" title="Notifications">&#128276;</span>
+          <span class="icon clickable" data-section="settings" title="Settings">&#9881;</span>
         </div>
       </header>
       <div class="content-wrapper">
@@ -61,15 +80,57 @@
       </div>
     </section>
 
+    <!-- PROFILE SECTION -->
+    <section id="profile" class="main-section">
+      <header class="main-header">
+        <div class="header-with-back">
+          <button class="back-btn smart-back">&#8592;</button>
+          <h2>My Profile</h2>
+        </div>
+        <div class="main-header-icons">
+          <span class="icon clickable" data-section="settings" title="Settings">&#9881;</span>
+        </div>
+      </header>
+      <div class="content-wrapper">
+        <p>Profile page - Coming soon</p>
+      </div>
+    </section>
+
+    <!-- SETTINGS SECTION -->
+    <section id="settings" class="main-section">
+      <header class="main-header">
+        <div class="header-with-back">
+          <button class="back-btn smart-back">&#8592;</button>
+          <h2>Settings</h2>
+        </div>
+      </header>
+      <div class="content-wrapper">
+        <p>Settings page - Coming soon</p>
+      </div>
+    </section>
+
+    <!-- NOTIFICATIONS SECTION -->
+    <section id="notifications" class="main-section">
+      <header class="main-header">
+        <div class="header-with-back">
+          <button class="back-btn smart-back">&#8592;</button>
+          <h2>Notifications</h2>
+        </div>
+      </header>
+      <div class="content-wrapper">
+        <p>Notifications page - Coming soon</p>
+      </div>
+    </section>
+
     <!-- DISCOVER SECTION -->
     <section id="discover" class="main-section">
       <header class="main-header">
         <div class="header-with-back">
-          <button class="back-btn" data-section="home">&#8592;</button>
+          <button class="back-btn smart-back">&#8592;</button>
           <h2>Discover Matches</h2>
         </div>
         <div class="main-header-icons">
-          <span class="icon">&#8942;</span>
+          <span class="icon clickable" data-section="settings" title="Settings">&#8942;</span>
         </div>
       </header>
       <div class="content-wrapper">
@@ -85,18 +146,36 @@
     </section>
 
     <!-- MESSENGER SECTION -->
-    <section id="messenger" class="main-section">
-      <header class="main-header">
-        <div>
-          <h2>Messenger</h2>
+    <section id="messenger" class="main-section messenger-layout">
+      <div class="messenger-sidebar">
+        <div class="messenger-header">
+          <h3>Conversations</h3>
         </div>
-        <div class="main-header-icons">
-          <span class="icon">&#128276;</span>
-          <span class="icon">&#9881;</span>
+        <div class="conversations-list" id="conversations-list">
+          <!-- Dynamically populated by JavaScript -->
         </div>
-      </header>
-      <div class="content-wrapper">
-        <p>Page under construction.</p>
+      </div>
+      <div class="chat-area">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <button class="back-btn-chat smart-back">&#8592;</button>
+            <span id="chat-recipient-name">Select a conversation</span>
+          </div>
+          <div class="chat-header-icons">
+            <span class="icon clickable" title="Search">&#128269;</span>
+            <span class="icon clickable" data-section="settings" title="Settings">&#8942;</span>
+          </div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <!-- Dynamically populated by JavaScript -->
+        </div>
+        <div class="chat-input-area">
+          <button class="attachment-btn" aria-label="Attach">&#128206;</button>
+          <button class="emoji-btn" aria-label="Emoji">&#128578;</button>
+          <input type="text" id="message-input" placeholder="Type a message..." />
+          <button class="menu-btn" aria-label="Menu">&#9776;</button>
+          <button class="send-btn" id="send-btn" aria-label="Send">&#10148;</button>
+        </div>
       </div>
     </section>
   </main>
