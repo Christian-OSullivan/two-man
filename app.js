@@ -1,11 +1,10 @@
-// ============ CONFIG ============
+// API endpoint for backend services
 const API_BASE = "https://lf2yqlztrf.execute-api.eu-north-1.amazonaws.com";
 
-// ============ HOME PAGE: Real AWS Backend ============
-
+// Fetch news from AWS backend and display on home page
 async function loadNews() {
   try {
-    console.log("📡 Fetching news from AWS...");
+    console.log("Fetching news from AWS...");
     const response = await fetch(`${API_BASE}/news`);
     const newsItems = await response.json();
     
@@ -18,11 +17,12 @@ async function loadNews() {
       </div>
     `).join("");
   } catch (error) {
-    console.error("❌ News Error:", error);
+    console.error("News Error:", error);
     document.getElementById("news-container").innerHTML = `<p style="color:red;">Failed to load news</p>`;
   }
 }
 
+// Display current matches on the home page
 function loadCurrentMatches() {
   const mockMatches = [
     { name: "Sarah O'Connor" },
@@ -39,33 +39,33 @@ function loadCurrentMatches() {
   `).join("");
 }
 
-// ============ DISCOVER PAGE: Mock Data ============
-
+// Store match data by category on the discover page
 const matches = {
   accepted: [
-    { name: 'Alice Johnson', updated: 'Today' },
-    { name: 'Bob Smith', updated: 'Yesterday' }
+    { name: 'Sophie Turner', updated: 'Today' },
+    { name: 'James Mitchell', updated: 'Yesterday' }
   ],
   potential: [
-    { name: 'fullName1', updated: 'Updated today' },
-    { name: 'fullName2', updated: 'Updated yesterday' },
-    { name: 'fullName3', updated: 'Updated 2 days ago' },
-    { name: 'fullName4', updated: 'Updated today' },
-    { name: 'fullName5', updated: 'Updated yesterday' },
-    { name: 'fullName6', updated: 'Updated 2 days ago' },
-    { name: 'fullName7', updated: 'Updated today' },
-    { name: 'fullName8', updated: 'Updated yesterday' },
-    { name: 'fullName9', updated: 'Updated today' },
-    { name: 'fullName10', updated: 'Updated yesterday' }
+    { name: 'Olivia Hayes', updated: 'Updated today' },
+    { name: 'Liam Connor', updated: 'Updated yesterday' },
+    { name: 'Emma Walsh', updated: 'Updated 2 days ago' },
+    { name: 'Noah Blake', updated: 'Updated today' },
+    { name: 'Ava Murphy', updated: 'Updated yesterday' },
+    { name: 'Ethan Cole', updated: 'Updated 2 days ago' },
+    { name: 'Isabella Grant', updated: 'Updated today' },
+    { name: 'Mason Riley', updated: 'Updated yesterday' },
+    { name: 'Sophia Bennett', updated: 'Updated today' },
+    { name: 'Lucas Foster', updated: 'Updated yesterday' }
   ],
   rejected: [
-    { name: 'Charlie Brown', updated: 'Last week' },
-    { name: 'Diana Prince', updated: '2 weeks ago' }
+    { name: 'Harper Stewart', updated: 'Last week' },
+    { name: 'Benjamin Cross', updated: '2 weeks ago' }
   ]
 };
 
+// Filter matches by category and update the grid display
 function filterMatches(category, event) {
-  // Update active chip
+  // Update the active chip to show which filter is selected
   document.querySelectorAll('.chip').forEach(chip => chip.classList.remove('active'));
 
   // Prefer the event's element, otherwise find chip by category
@@ -86,7 +86,7 @@ function filterMatches(category, event) {
   }
 }
 
-// Attach chip listeners
+// Set up click handlers for filter chips when page loads
 document.addEventListener('DOMContentLoaded', () => {
   const chips = document.querySelectorAll('.chip');
   chips.forEach(chip => {
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Messenger - Select conversation
+// Handle conversation selection in the messenger
 function selectConversation(event) {
   const el = event.currentTarget || event; // allow calling with element or event
   // Remove active from all
@@ -111,7 +111,7 @@ function selectConversation(event) {
   if (header) header.textContent = nameText;
 }
 
-// Load potential matches on discover page load (trigger default tab)
+// Load the default potential matches tab when discover page loads
 document.addEventListener('DOMContentLoaded', () => {
   const matchesGrid = document.getElementById('matchesGrid');
   if (matchesGrid) {
@@ -121,14 +121,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ============ MESSENGER PAGE: Mock Data ============
-
+// Store mock conversation data for the messenger
 const conversationsData = [
-  { id: 1, name: 'fullName1', preview: 'Supporting...' },
-  { id: 2, name: 'fullName2', preview: 'Supporting...' },
-  { id: 3, name: 'fullName3', preview: 'Would like to...' }
+  { id: 1, name: 'Olivia Hayes', preview: 'Supporting...' },
+  { id: 2, name: 'Liam Connor', preview: 'Supporting...' },
+  { id: 3, name: 'Emma Walsh', preview: 'Would like to...' }
 ];
 
+// Store mock messages for each conversation
 const messagesData = {
   1: [
     { sender: 'them', text: 'Hey! How are you?' },
@@ -147,6 +147,7 @@ const messagesData = {
 
 let currentConversationId = null;
 
+// Load all conversations and attach click listeners
 function loadConversations() {
   const container = document.getElementById('conversations-container');
   if (!container) return;
@@ -169,6 +170,7 @@ function loadConversations() {
   if (conversationsData.length > 0) loadMessages(1);
 }
 
+// Load and display messages for a specific conversation
 function loadMessages(conversationId) {
   currentConversationId = conversationId;
   const conversation = conversationsData.find(c => c.id === conversationId);
@@ -189,8 +191,7 @@ function loadMessages(conversationId) {
   container.scrollTop = container.scrollHeight;
 }
 
-// ============ MESSAGE SENDING ============
-
+// Handle sending messages in the chat
 const sendBtn = document.getElementById('send-btn');
 const messageInput = document.getElementById('message-input');
 
@@ -207,7 +208,7 @@ if (sendBtn && messageInput) {
     
     messageInput.value = '';
     container.scrollTop = container.scrollHeight;
-    console.log(`📤 Sent: "${text}"`);
+    console.log(`Sent: "${text}"`);
   };
   
   sendBtn.addEventListener('click', sendMessage);
@@ -216,12 +217,11 @@ if (sendBtn && messageInput) {
   });
 }
 
-// ============ INITIALIZATION ============
-
+// Initialize all page components when DOM loads
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 Page loaded');
+  console.log('Page loaded');
   
-  // Existing initialisation...
+  // Set up home page with news and matches
   if (document.getElementById('news-container')) {
     loadCurrentMatches();
     loadNews();
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadConversations();
   }
 
-  // NEW: sidebar menu toggle
+  // Toggle sidebar navigation on mobile
   const menuBtn = document.querySelector('.menu-btn');
   const nav = document.querySelector('.nav');
 
@@ -243,4 +243,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-
