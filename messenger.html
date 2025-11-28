@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two-Man - Messenger</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container messenger-container">
+    <aside class="sidebar">
+      <div class="sidebar-top">
+        <button class="menu-btn">☰</button>
+        <a href="user.html" class="avatar-link" title="User profile" aria-label="User profile">
+          <div class="avatar" role="img" aria-hidden="true"></div>
+        </a>
+      </div>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">🏠</a>
+        <a href="discover.html" class="nav-link">🔍</a>
+        <a href="messenger.html" class="nav-link active">💬</a>
+      </nav>
+    </aside>
+
+    <div class="messenger-layout">
+      <aside class="conversations-panel">
+        <h3>Conversations</h3>
+        <div class="conversations-list" id="conversations-container"></div>
+      </aside>
+
+      <main class="chat-area">
+        <header class="chat-header">
+          <div class="header-left">
+            <a href="index.html" class="back-btn">←</a>
+            <h2 id="chat-name">Select a conversation</h2>
+          </div>
+          <button>⋮</button>
+        </header>
+
+        <div class="messages" id="messages-container"></div>
+
+        <div class="input-area">
+          <button>📎</button>
+          <button>😊</button>
+          <input type="text" id="message-input" placeholder="Type a message…" />
+          <button id="send-btn">➤</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

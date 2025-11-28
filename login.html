@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two-Man - Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="login-page">
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Two-Man</h1>
+      <p>Find your perfect roommate</p>
+    </div>
+
+    <form class="login-form" onsubmit="event.preventDefault(); window.location.href='index.html';">
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="your@email.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox">
+          <input type="checkbox"> Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-login">Sign In</button>
+
+      <div class="login-divider">
+        <span>Don't have an account?</span>
+      </div>
+
+      <button type="button" class="btn-signup" onclick="alert('Sign up functionality coming soon!')">Create Account</button>
+    </form>
+
+    <div class="login-footer">
+      <p>By signing in, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
+    </div>
+  </div>
+</div>
+</body>
+</html>
