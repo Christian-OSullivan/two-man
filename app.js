@@ -133,7 +133,7 @@ const messagesData = {
   1: [
     { sender: 'them', text: 'Hey! How are you?' },
     { sender: 'me', text: 'Great! How about you?' },
-    { sender: 'them', text: 'Thanks! I\'ll send mine soon as well' }
+    { sender: 'them', text: 'Grand but the prices for places in dublin is crazy!' }
   ],
   2: [
     { sender: 'them', text: 'Interested in meeting?' },
